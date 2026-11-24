@@ -1,34 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import a1 from "@/assets/VAZ_8269_2-2.JPG.asset.json";
-import a2 from "@/assets/DSC_6059-2.JPG.asset.json";
-import a3 from "@/assets/DSC_0915-2.JPG.asset.json";
-import a4 from "@/assets/DSC_0750-2.JPG.asset.json";
-import a5 from "@/assets/Design_sem_nome.webp.asset.json";
-import a6 from "@/assets/IMG_8130.jpg.asset.json";
-import a7 from "@/assets/IMG_8335.JPG.asset.json";
-import a8 from "@/assets/IMG_6798.JPG.asset.json";
-import a9 from "@/assets/DSC_6391.JPG.asset.json";
-import b1 from "@/assets/IAG_1210.jpg.asset.json";
-import b4 from "@/assets/IAG_1324.jpg.asset.json";
-import b5 from "@/assets/DSC_6444.JPG.asset.json";
-import b7 from "@/assets/DSC_6512.JPG.asset.json";
-import c1 from "@/assets/DSC_0542.JPG.asset.json";
-import c2 from "@/assets/DSC_5421.JPG.asset.json";
-import c3 from "@/assets/DSC_4117-2.jpg.asset.json";
-import c8 from "@/assets/DSC_7043.jpg.asset.json";
-import c9 from "@/assets/DSC_7141.webp.asset.json";
-import d1 from "@/assets/evento-igreja.jpg.asset.json";
-import d2 from "@/assets/evento-pista-danca.jpg.asset.json";
-import d3 from "@/assets/formatura-sentada-beca.png.asset.json";
-import e1 from "@/assets/estudio-estetoscopio.jpg.asset.json";
-import e2 from "@/assets/estudio-cadeira.jpg.asset.json";
-import e3 from "@/assets/estudio-mao-cintura.jpg.asset.json";
-import e4 from "@/assets/estudio-pilha-cabecas.jpg.asset.json";
-import e5 from "@/assets/estudio-olho-sombra.jpg.asset.json";
-import e6 from "@/assets/estudio-luzes-fundo.webp.asset.json";
-import e7 from "@/assets/estudio-jaleco-azul.webp.asset.json";
+import {
+  galleryFilters,
+  galleryPhotos,
+  gallerySite,
+  type GalleryCategory,
+  type GalleryPhoto,
+} from "@/data/gallery.generated";
 
 const WHATSAPP = "https://wa.me/5541997956828";
 const INSTAGRAM = "https://instagram.com/iagoscope";
@@ -49,41 +28,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Category = "Formatura" | "Estúdio" | "Esporte" | "Eventos";
-type Photo = { src: string; alt: string; cat: Category };
-
-const photos: Photo[] = [
-  { src: a1.url, alt: "Retrato de formanda com beca vermelha em estúdio", cat: "Formatura" },
-  { src: a2.url, alt: "Formanda comemorando sob cúpula de vidro", cat: "Formatura" },
-  { src: a4.url, alt: "Bastidores: formanda calçando o salto", cat: "Formatura" },
-  { src: a3.url, alt: "Discurso no palco com luzes da plateia", cat: "Formatura" },
-  { src: a9.url, alt: "Retrato de formanda de medicina com beca verde", cat: "Formatura" },
-  { src: b5.url, alt: "Formandos erguendo os capelos sob a cúpula", cat: "Formatura" },
-  { src: b7.url, alt: "Capelos lançados ao alto no palco da colação", cat: "Formatura" },
-  { src: c1.url, alt: "Formando de medicina com beca verde ao entardecer", cat: "Formatura" },
-  { src: c2.url, alt: "Detalhe: rosa branca e terço na mão da formanda", cat: "Formatura" },
-  { src: d3.url, alt: "Formanda sentada na plateia com beca vermelha", cat: "Formatura" },
-  { src: b1.url, alt: "Ensaio em preto e branco na poltrona de couro", cat: "Estúdio" },
-  { src: b4.url, alt: "Retrato de corpo inteiro em ambiente minimalista", cat: "Estúdio" },
-  { src: c3.url, alt: "Retrato em preto e branco com reflexo no vidro", cat: "Estúdio" },
-  { src: e1.url, alt: "Retrato com estetoscópio e braços cruzados", cat: "Estúdio" },
-  { src: e2.url, alt: "Retrato masculino sentado na cadeira", cat: "Estúdio" },
-  { src: e3.url, alt: "Retrato com mão na cintura em fundo cinza", cat: "Estúdio" },
-  { src: e4.url, alt: "Pilha de cabeças em preto e branco", cat: "Estúdio" },
-  { src: e5.url, alt: "Olho em close sob sombra dramática", cat: "Estúdio" },
-  { src: e6.url, alt: "Retrato de preto com luzes ao fundo", cat: "Estúdio" },
-  { src: e7.url, alt: "Retrato de jaleco com braços cruzados em fundo azul", cat: "Estúdio" },
-  { src: a5.url, alt: "Sequência de nadador em prova de borboleta", cat: "Esporte" },
-  { src: a6.url, alt: "Saque de tênis visto através do alambrado", cat: "Esporte" },
-  { src: a7.url, alt: "Corredor na pista ao pôr do sol", cat: "Esporte" },
-  { src: a8.url, alt: "Retrato de festa com vestido de pérolas", cat: "Eventos" },
-  { src: c8.url, alt: "Casal posando em evento ao ar livre", cat: "Eventos" },
-  { src: c9.url, alt: "Grupo de amigas posando em evento no deck", cat: "Eventos" },
-  { src: d1.url, alt: "Convidada sorrindo na igreja", cat: "Eventos" },
-  { src: d2.url, alt: "Duas amigas na pista de dança", cat: "Eventos" },
-];
-
-const filters: Category[] = ["Formatura", "Estúdio", "Esporte", "Eventos"];
+const photos = galleryPhotos;
 const mono = "font-mono uppercase tracking-[0.12em]";
 
 function plan(rs: number[], W: number, g: number, m: boolean): [number, number][] {
@@ -116,7 +61,7 @@ function plan(rs: number[], W: number, g: number, m: boolean): [number, number][
   return rows;
 }
 
-function buildRows(items: Photo[], ratios: Record<string, number>, W: number, g: number, m: boolean) {
+function buildRows(items: GalleryPhoto[], ratios: Record<string, number>, W: number, g: number, m: boolean) {
   const rs = items.map((p) => ratios[p.src] ?? 1.5);
   const pre = [0];
   rs.forEach((r) => pre.push(pre[pre.length - 1]! + r));
@@ -127,7 +72,7 @@ function buildRows(items: Photo[], ratios: Record<string, number>, W: number, g:
 }
 
 function Index() {
-  const [active, setActive] = useState<Category>("Formatura");
+  const [active, setActive] = useState<GalleryCategory>("Formatura");
   const [ratios, setRatios] = useState<Record<string, number>>({});
   const [width, setWidth] = useState(0);
   const [scrolled, setScrolled] = useState(false);
@@ -136,6 +81,13 @@ function Index() {
   const galleryRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const [fine, setFine] = useState(false);
+
+  const hero = gallerySite.heroImage;
+  const heroAlt =
+    photos.find((p) => p.src === hero)?.alt ?? "Destaque do portfólio";
+  const contato = gallerySite.contatoImage;
+  const contatoAlt =
+    photos.find((p) => p.src === contato)?.alt ?? "Destaque de formatura";
 
   const visible = photos.filter((p) => p.cat === active);
   const [mobile, setMobile] = useState(false);
@@ -241,15 +193,17 @@ function Index() {
             className="rise relative mt-8 aspect-[4/5] overflow-hidden border border-bone/12 md:mt-12 md:aspect-[21/10]"
             style={{ animationDelay: "0.15s" }}
           >
-            <img
-              src={a2.url}
-              alt="Formanda comemorando sob cúpula de vidro"
-              className="absolute inset-0 h-full w-full object-cover"
-              style={{
-                objectPosition: "center 34%",
-                transform: `translateY(${parallax}px) scale(1.1)`,
-              }}
-            />
+            {hero ? (
+              <img
+                src={hero}
+                alt={heroAlt}
+                className="absolute inset-0 h-full w-full object-cover"
+                style={{
+                  objectPosition: "center 34%",
+                  transform: `translateY(${parallax}px) scale(1.1)`,
+                }}
+              />
+            ) : null}
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
             <span
               className={`${mono} absolute left-3 top-3 border border-bone/18 bg-ink/80 px-[13px] py-[10px] text-[11px] md:left-5 md:top-5`}
@@ -266,7 +220,7 @@ function Index() {
 
         <section id="portfolio" className="mx-auto max-w-7xl scroll-mt-20 px-5 py-16 md:px-8 md:py-24">
           <div className="mb-8 flex flex-wrap gap-2">
-            {filters.map((f) => (
+            {galleryFilters.map((f) => (
               <button
                 key={f}
                 onClick={() => setActive(f)}
@@ -356,12 +310,14 @@ function Index() {
               </div>
             </div>
             <figure className="bg-ink p-2">
-              <img
-                src={b7.url}
-                alt="Capelos lançados ao alto no palco da colação"
-                loading="lazy"
-                className="aspect-[16/10] w-full object-cover md:aspect-[4/5]"
-              />
+              {contato ? (
+                <img
+                  src={contato}
+                  alt={contatoAlt}
+                  loading="lazy"
+                  className="aspect-[16/10] w-full object-cover md:aspect-[4/5]"
+                />
+              ) : null}
               <figcaption className={`${mono} px-1 pt-2 text-[11px] text-gold`}>
                 // Formatura
               </figcaption>

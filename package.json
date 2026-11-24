@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "gallery:build": "bun scripts/build-gallery.mjs",
+    "predev": "bun run gallery:build",
+    "prebuild": "bun run gallery:build",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
